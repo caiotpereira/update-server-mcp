@@ -14,6 +14,18 @@
         "BUILDER": "fio-demo",
         "BUILD_WORKDIR": "/path/to/workspaces"
       }
+    },
+    "update-server-token-auth": {
+      "command": "/path/to/update-server-mcp/bin/update-server-mcp",
+      "args": [
+        "-auth",
+        "token",
+        "-read-only"
+      ],
+      "env": {
+        "UPDATE_SERVER_URL": "http://update.example.lan:8080",
+        "UPDATE_SERVER_TOKEN_FILE": "/run/secrets/update-server-token"
+      }
     }
   }
 }

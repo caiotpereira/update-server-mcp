@@ -26,8 +26,17 @@ re-implements the HTTP surface.
 
 ## Fleet server
 
-Reads its server URL and token from the file `fiocli` uses
-(`$HOME/.config/satcli.yaml`), at call time. Run `fiocli login` first.
+Credentials come from one of two places, chosen with `-auth`:
+
+| `-auth` | where credentials come from |
+|---|---|
+| `auto` (default) | token auth if a URL and token are both set, else the `fiocli` config |
+| `fiocli` | the `fiocli` config only — fails rather than falling back |
+| `token` | the supplied URL and token only; never reads the `fiocli` config |
+
+**fiocli auth** reuses the file `fiocli` writes (`$HOME/.config/satcli.yaml`),
+read at call time — so a `fiocli login` in another terminal takes effect
+without restarting the server. Run `fiocli login` first.
 
 ```
 bin/update-server-mcp                 # active context
@@ -35,10 +44,40 @@ bin/update-server-mcp -context prod
 bin/update-server-mcp -read-only      # drops every state-changing tool
 ```
 
+**token auth** needs no `fiocli` at all, which is what you want for a
+container, a CI runner, or a server someone else operates:
+
+```
+UPDATE_SERVER_URL=http://update.example.lan:8080 \
+UPDATE_SERVER_TOKEN_FILE=/run/secrets/update-server-token \
+bin/update-server-mcp -auth token
+```
+
+| flag | env | mode |
+|---|---|---|
+| `-auth` | `AUTH` | both |
+| `-config` | `FIOCLI_CONFIG` | fiocli |
+| `-context` | `FIOCLI_CONTEXT` | fiocli |
+| `-url` | `UPDATE_SERVER_URL` | token |
+| — | `UPDATE_SERVER_TOKEN` | token |
+| `-token-file` | `UPDATE_SERVER_TOKEN_FILE` | token |
+
+There is deliberately **no `-token` flag**: anything in argv is readable by
+every process on the host through `/proc`. Pass the token by environment, or
+better by `-token-file`, which keeps it out of the environment a child process
+inherits. A trailing newline in the file is trimmed — otherwise it would be
+sent as part of the bearer value and rejected.
+
+`auto` will not pick token mode from a half-configured environment: with a URL
+but no token it falls back to `fiocli` rather than building an unauthenticated
+client.
+
 Register it with Claude Code:
 
 ```
 claude mcp add update-server -- /path/to/bin/update-server-mcp
+claude mcp add update-server -e AUTH=token -e UPDATE_SERVER_URL=http://update.example.lan:8080 \
+  -e UPDATE_SERVER_TOKEN_FILE=/run/secrets/update-server-token -- /path/to/bin/update-server-mcp
 ```
 
 **23 tools.** Reads: `devices_list`, `device_show`, `device_updates`,

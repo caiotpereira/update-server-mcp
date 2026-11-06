@@ -7,11 +7,25 @@ else is optional. This file mirrors the registrations in
 
 ## Fleet server — `update-server-mcp`
 
-Flags: `-config <file>` (default: the file `fiocli` uses,
-`$HOME/.config/satcli.yaml`), `-context <name>` (default: the active one),
-`-read-only`, `-version`. Also honours `FIOCLI_CONFIG` and `FIOCLI_CONTEXT`.
-The token is read at call time, so a `fiocli login` in another terminal takes
-effect without restarting the server.
+Flags:
+
+| flag | env | meaning |
+|---|---|---|
+| `-auth` | `AUTH` | `auto` (default), `fiocli` or `token` |
+| `-config` | `FIOCLI_CONFIG` | fiocli config file (default `$HOME/.config/satcli.yaml`) |
+| `-context` | `FIOCLI_CONTEXT` | context in that file (default: the active one) |
+| `-url` | `UPDATE_SERVER_URL` | server base URL, token auth |
+| — | `UPDATE_SERVER_TOKEN` | bearer token, token auth |
+| `-token-file` | `UPDATE_SERVER_TOKEN_FILE` | file holding the token, token auth |
+| `-read-only` | — | register only the 17 read tools |
+| `-version` | — | print version and exit |
+
+In `fiocli` mode the token is read at call time, so a `fiocli login` in another
+terminal takes effect without restarting the server. In `token` mode the
+`fiocli` config is never touched, which is what a container or CI runner wants.
+`auto` uses token auth only when a URL *and* a token are both present, and
+falls back to `fiocli` otherwise rather than building an unauthenticated
+client. There is no `-token` flag: argv is world-readable through `/proc`.
 
 ### Reads (17)
 

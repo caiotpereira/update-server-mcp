@@ -72,7 +72,15 @@ Rules that hold across tools:
 
 ## Secrets
 
-The API token is read from the `fiocli` config at call time and never logged,
+The fleet server takes credentials from the `fiocli` config or from an
+explicit URL plus token (`internal/client`, `-auth auto|fiocli|token`). Token
+mode exists so the server can run where no operator has logged in; it must
+never fall back to reading an operator's config when it was asked for a token,
+and `auto` must not build an unauthenticated client from a half-set
+environment. Never add a `-token` flag — argv is world-readable through
+`/proc`.
+
+The API token is read at call time and never logged,
 never echoed in a tool result, and never written to a scratch file.
 `config_show` withholds encrypted config contents and reports only names. Keep
 it that way: do not add a tool that mints, reads or prints a credential.
