@@ -157,6 +157,8 @@ The first four come from the build server, the rest from the fleet server.
 
 ## Documentation
 
+* [docs/QUICKSTART.md](docs/QUICKSTART.md) — build, authenticate, register,
+  and ship an app end to end.
 * [docs/TOOLS.md](docs/TOOLS.md) — every tool, its parameters and what it
   returns.
 * [CONTRIBUTING.md](CONTRIBUTING.md) — setup, the pre-PR checks, how to add a
