@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "update-server": {
+      "command": "/path/to/update-server-mcp/bin/update-server-mcp",
+      "args": []
+    },
+    "update-server-build": {
+      "command": "/path/to/update-server-mcp/bin/update-server-build-mcp",
+      "args": [],
+      "env": {
+        "REGISTRY": "registry.example.lan:5000",
+        "PUSH_REGISTRY": "127.0.0.1:5000",
+        "REGISTRY_CA": "/path/to/certs/ca.crt",
+        "BUILDER": "fio-demo",
+        "BUILD_WORKDIR": "/path/to/workspaces"
+      }
+    }
+  }
+}

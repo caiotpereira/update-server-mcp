@@ -1,0 +1,64 @@
+# Build output
+/bin/
+*.exe
+*.test
+*.out
+
+# Credentials and keys — never commit. The fleet server reads its token from
+# the fiocli config at runtime; nothing here should ever hold one.
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.jks
+*.csr
+*.srl
+id_rsa*
+id_ecdsa*
+id_ed25519*
+satcli.y*ml
+*token*
+*secret*
+*credential*
+.netrc
+.npmrc
+.env
+.env.*
+!.env.example
+
+# Local MCP client config: holds absolute paths, registry addresses and
+# sometimes env secrets. Only the .example is tracked.
+.mcp.json
+/mcp.json
+
+# Device and update artifacts — payloads are multi-GB and contain app content
+/apps/
+/ostree_repo/
+/tuf/
+app.hash
+image-digests.env
+*.tar
+*.tar.gz
+*.tgz
+
+# Local notes and scratch
+/scratch/
+/tmp/
+*.log
+*.orig
+*.rej
+*.bak
+*~
+
+# Editor and OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Go workspace files pin local paths
+go.work
+go.work.sum
