@@ -62,17 +62,7 @@ a single-line `-m` body is left unwrapped and the shell eats backticks and
 `$`. Reserve `-m` for the subject.
 
 Each commit carries a `Signed-off-by: <Name> <email>` (DCO) trailer, then any
-`Co-Authored-By:` trailers. Work done with an AI assistant also names the
-model, so the history says which one:
-
-```
-Signed-off-by: Caio Pereira <caiopere@qti.qualcomm.com>
-Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
-Assisted-by: Claude Code (model claude-opus-5)
-```
-
-The sign-off is the human author's either way — the assistant's attribution
-does not substitute for it. Check `git log` and mirror the form it uses.
+`Co-Authored-By:` trailers. Check `git log` and mirror the form it uses.
 
 ## License
 
