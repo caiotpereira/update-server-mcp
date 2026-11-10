@@ -1,5 +1,18 @@
 # update-server MCP servers
 
+> [!IMPORTANT]
+> **Unofficial, and not for production.**
+>
+> This is a personal project. It is not an official Qualcomm or Foundries.io
+> product, it is not supported by either, and it has no relation to any
+> official Qualcomm MCP server at this time.
+>
+> It is built against the open source implementation of `update-server` and is
+> intended for experimentation, demos and local fleets. Do not use it to
+> operate a production fleet: it can create rollouts, replace a device's app
+> selection, upload updates and delete device records, and nothing here has
+> been reviewed or hardened for that. No warranty — see [LICENSE](LICENSE).
+
 Two MCP servers for the self-hosted Foundries `update-server`, in Go:
 
 | binary | what it does | needs |
